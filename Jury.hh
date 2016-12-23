@@ -1,18 +1,20 @@
 #pragma once
 #include "Electeur.hh"
+#include "Team.hh"
 #include <map>
 
+class Team ;
 class Jury : public Electeur {
 
  public:
 
-    Candidat* vote(list<Candidat> lc)const ;
-    Jury(string name): Electeur(3),_name(name){abilityInit();}; 
+    Candidat vote(std::list<Candidat> lc)const ;
+    Candidat vote(Team& t1)const ;
+    Jury(std::string name): Electeur(3),_name(name){abilityInit();}; 
     void abilityInit();
+    std::string toString()const ;
 
  private:
-    string _name;
+    std::string _name;
     std::map<std::string, int> abilitie_preference;
 };
-
-//bool operator==(Candidat candi , std::map<std::string, int> abilitie_preference);

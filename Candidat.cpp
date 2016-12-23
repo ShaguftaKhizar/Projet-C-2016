@@ -17,7 +17,7 @@ Candidat::Candidat(string _nom, int _age, string _description){
 	abilityInit();
 }
 
-Candidat::Candidat (Candidat& c1){
+Candidat::Candidat (const Candidat& c1){
 
 		
 	identity[0] = c1.identity[0];
