@@ -1,20 +1,24 @@
-
-#include "Publique.hh"
-#include "Jury.hh"
+#include "ProductionHouseTeam.hh"
+#include "ProductionHouse.hh"
 #include "Candidat.hh"
-#include "Mentor.hh"
+#include "Team.hh"
+#include "Victim.hh"
+#include "Jury.hh"
+#include "Jury_Team.hh"
+#include "Killer.hh"
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <list>
 #include <map>
+
 using namespace std;
 
 int main()
 {
     srand(time(NULL));
 
-    list< Candidat > lc;
+    list<Candidat> lc;
 
     lc.push_back(Candidat("Vanessa Paradis", 45, "je suis une chanteuse de renomme mondiale"));
     lc.push_back(Candidat("Maite", 60, "je suis ronde et enjoue"));
@@ -29,10 +33,9 @@ int main()
     lc.push_back(Candidat("Melania Trump", 38, "je suis la futur first lady des USA"));
     lc.push_back(Candidat("Maria Carrey", 39, "je suis une chanteuse qui s'egare"));
     lc.push_back(Candidat("Pamela anderson", 48, "je suis une actrice age mais pulpeuse"));
-    
-    Publique p(20);
-    Jury j("Benoit");
-    Mentor m("nana");
 
-	
+    Victim v1(13, lc);
+
+    cout << v1.toString() << endl;
+
 }
