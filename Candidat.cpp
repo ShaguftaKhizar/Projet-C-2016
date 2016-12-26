@@ -17,18 +17,6 @@ Candidat::Candidat(string _nom, int _age, string _description){
 	abilityInit();
 }
 
-Candidat::Candidat (const Candidat& c1){
-
-		
-	identity[0] = c1.identity[0];
-	identity[1] = c1.identity[1];
-	identity[2] = c1.identity[2];
-
-	popularity = c1.popularity; 
-	abilities = c1.abilities ;
-	
-}
-
 void Candidat::abilityInit()
 {
 

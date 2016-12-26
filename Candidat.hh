@@ -14,8 +14,6 @@ private:
 
 public:
 	Candidat(std::string nom, int age, std::string description);
-	Candidat(const Candidat& c1);
-	bool getSelected(){ return selected ;};
 	void print();
 	std::string toString();
 	std::map<std::string, int> getAbilities(){ return abilities; };

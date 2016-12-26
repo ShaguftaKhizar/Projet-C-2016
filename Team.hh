@@ -1,22 +1,20 @@
-#pragma once 
-#include "ProductionHouse.hh"
-#include "Candidat.hh"
+#pragma once
 #include <list>
 #include <string>
 #include "Jury.hh"
-//class Jury ;
+#include "ProductionHouse.hh"
+#include "Candidat.hh"
 
 class Team{
 
 protected:
 	int memberNumber;
 	std::list<Candidat> teamMember;
-	int teamNumber;
 	std::list<Jury> teamMemberJ;
 	std::list<ProductionHouse> teamMemberP;
 
 public:
-	//static int teamNumber;
+	static int teamNumber;
 	virtual std::string toString() const = 0;
 	Team(int _memberNumber, std::list<Candidat> _teamMember) : memberNumber(_memberNumber), teamMember(_teamMember){};
 	Team(int _memberNumber, std::list<Jury> _teamMember) : memberNumber(_memberNumber), teamMemberJ(_teamMember){};

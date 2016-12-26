@@ -1,26 +1,24 @@
+all: teampart
 
-all : Prog
-CFLAGS = g++ -Wall -g -std=c++11
+CFLAGS= -Wall -g
 
-Prog: Publique.o Candidat.o Jury.o Mentor.o main.o 
-	$(CFLAGS) Publique.o  Jury.o Candidat.o Mentor.o main.o  -o Prog
-
+teampart : main.o Candidat.o Victim.o Jury_Team.o ProductionHouseTeam.o
+	g++ $(CFLAGS) Candidat.o Victim.o Jury_Team.o ProductionHouseTeam.o main.o -o teampart --std=c++11
+	
+ main.o :  main.cc
+	g++ $(CFLAGS) -c  main.cc --std=c++11
+	
 Candidat.o : Candidat.cpp Candidat.hh
-	$(CFLAGS) -c Candidat.cpp
-		
-Publique.o : Publique.hh Publique.cpp
-	$(CFLAGS) -c Publique.cpp
-	
-Jury.o : Jury.hh Jury.cpp
-	$(CFLAGS) -c Jury.cpp
+	g++ $(CFLAGS) -c Candidat.cpp --std=c++11
 
-Mentor.o : Mentor.hh Mentor.cpp
-	$(CFLAGS) -c Mentor.cpp
+Victim.o : Victim.cpp Victim.hh
+	g++ $(CFLAGS) -c Victim.cpp --std=c++11
 
-main.o : main.cc
-	$(CFLAGS) -c main.cc
+Jury_Team.o : Jury_Team.cpp Jury_Team.hh
+	g++ $(CFLAGS) -c Jury_Team.cpp --std=c++11
 
-	
-clean:
-	rm -f *.o Prog
-	
+ProductionHouseTeam.o : ProductionHouseTeam.cpp ProductionHouseTeam.hh
+	g++ $(CFLAGS) -c ProductionHouseTeam.cpp --std=c++11
+
+clean :
+	rm -f *.o teampart

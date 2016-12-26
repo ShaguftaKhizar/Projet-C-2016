@@ -3,7 +3,7 @@
 #include "Candidat.hh"
 #include <list>
 
-class Victim : public Team {
+class Victim : public Team{
 
 protected:
 	bool survive = true;
