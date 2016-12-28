@@ -16,7 +16,18 @@ Candidat::Candidat(string _nom, int _age, string _description){
 	popularity = rand()%101; 
 	abilityInit();
 }
+/*
+Candidat::Candidat(const Candidat& c){
 
+	identity[0] = c.identity[0];
+	identity[1] = to_string(c.identity[1]);
+	identity[2] = c.identity[2];
+
+	popularity = c.popularity;
+
+	abilities = c.abilities;
+}
+*/
 void Candidat::abilityInit()
 {
 

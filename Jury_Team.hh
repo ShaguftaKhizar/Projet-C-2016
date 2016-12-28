@@ -6,6 +6,7 @@
 
 class Jury_Team : public Killer{
 
+public:
 	Jury_Team(int _capacityKill, int _memberNumber, std::list<Jury> _teamMember);
 	void lowerSkills(Team&);
 	Candidat candidatKill(Victim&) const;

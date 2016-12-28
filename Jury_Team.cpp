@@ -39,19 +39,18 @@ void Jury_Team::lowerSkills(Team& t1){
 Candidat Jury_Team::candidatKill(Victim& v1) const{
 
 	Candidat c("ZERO", 0, "ZERO");
+		
 	list<Candidat> lc = v1.getTeamMember();
-	map<string, int>::iterator itLow, itUpper;
+	map<string, int>::const_iterator itLow;// itUpper;
 
 	for(auto it : lc){
 
 		map<string, int> abilit = it.getAbilities();
 		itLow = abilit.lower_bound("Walk");
-		itUpper = proAbilities.upper_bound("Wild");
-		//itUpper = abilit.upper_bound("Walk");
-
-		if(itLow->second < itUpper->second)
+		//itUpper = Killer::proAbilities.upper_bound("Wild");
+		
+		if(itLow->second < (10*Killer::capacityKill))
 			return it;
-
 
 	}
 
@@ -61,13 +60,13 @@ Candidat Jury_Team::candidatKill(Victim& v1) const{
 string Jury_Team::toString() const{
 
 	string s;
-	/*
+	
 	s += "Capacity kill : " + to_string(Killer::capacityKill) + " %\n";
 	s += "Team members : \n";
 
 	for(auto it : Team::teamMemberJ)
 		s += it.toString(); 
-	*/
+	
 	return s;
 }
 

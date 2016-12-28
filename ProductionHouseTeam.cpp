@@ -39,7 +39,7 @@ Candidat ProductionHouseTeam::candidatKill(Victim& v1) const{
 
 	for(auto it : lc){
 
-		if(it.getPopularity() <= 20)
+		if(it.getPopularity() <= (20*Killer::capacityKill))
 			return it;
 
 	}
@@ -50,10 +50,10 @@ Candidat ProductionHouseTeam::candidatKill(Victim& v1) const{
 string ProductionHouseTeam::toString() const{
 
 	string s;
-	/*
+	
 	s += "Capacity kill : " + to_string(Killer::capacityKill) + " %\n";
 	s += "Team members : \n";
-
+	/*
 	for(auto it : Team::teamMemberP)
 		s += it.toString(); 
 	*/

@@ -1,23 +1,19 @@
 #pragma once
 #include <list>
+#include <string>
 #include "Candidat.hh"
+#include "Victim.hh"
 #include "Team.hh"
 
 class Task{
 
+private:
+	int typeTeam(const Team& t1);
+
 public:
 	/*	Task between 2 victim teams	*/
-	Victim& fashion_show_challenge(const Victim& v1, const Victim& v2);
-	Victim& iq_test_challenge(const Victim& v1, const Victim& v2);
-	Victim& vakeUp_challenge(const Victim& v1, const Victim& v2);
-	Victim& valent_challenge(const Victim& v1, const Victim& v2);
-	Victim& vhotoshoot_challenge(const Victim& v1, const Victim& v2);	
-
+	Victim fashion_show_challenge(Victim& v1, Victim& v2, std::string abilityTested);	
 	/*	Task between a team and a killer team	*/	
-	Team& surprise_challenge(const Team& t1, const Team& t2);
-	Team& jungle_challenge(const Team& t1, const Team& t2);	
-	Team& sea_challenge(const Team& t1, const Team& t2);	
-	Team& roar_challenge(const Team& t1, const Team& t2);	
-	Team& speed_challenge(const Team& t1, const Team& t2);	
+	int surprise_challenge(const Team& t1, const Team& t2);
 
 };

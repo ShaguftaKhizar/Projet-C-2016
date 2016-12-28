@@ -15,7 +15,7 @@ protected:
 	/* le pouvoir décisionnel du public = 1 , celui du jury = 3 et celui des mentors = 2 */
     int  _decision_power;
     //ToString 
-     virtual std::string toString()const ;
+     virtual std::string toString()const = 0;
  
 };
 

@@ -5,6 +5,7 @@
 
 class ProductionHouseTeam : public Killer{
 
+public:
 	ProductionHouseTeam(int _capacityKill, int _memberNumber, std::list<ProductionHouse> _teamMember);
 	void lowerPopularity(Team&);
 	Candidat candidatKill(Victim&) const;

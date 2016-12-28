@@ -1,16 +1,23 @@
-#include "ProductionHouseTeam.hh"
-#include "ProductionHouse.hh"
-#include "Candidat.hh"
-#include "Team.hh"
-#include "Victim.hh"
-#include "Jury.hh"
-#include "Jury_Team.hh"
-#include "Killer.hh"
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <list>
 #include <map>
+
+#include "Team.hh"
+#include "Victim.hh"
+#include "Killer.hh"
+#include "Jury_Team.hh"
+#include "ProductionHouseTeam.hh"
+#include "ProductionHouse.hh"
+
+#include "Electeur.hh"
+#include "Jury.hh"
+#include "Mentor.hh"
+#include "Publique.hh"
+#include "Candidat.hh"
+#include "Task.hh"
+
 
 using namespace std;
 
@@ -37,5 +44,12 @@ int main()
     Victim v1(13, lc);
 
     cout << v1.toString() << endl;
+
+    list<Jury> lj;
+
+    lj.push_back(Jury("Jean Paul"));
+    lj.push_back(Jury("Yves Saint Laurent"));
+
+    Jury_Team j(8, 2, lj);
 
 }

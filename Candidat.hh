@@ -14,10 +14,13 @@ private:
 
 public:
 	Candidat(std::string nom, int age, std::string description);
+	Candidat(){};
+	//Candidat(const Candidat&);
 	void print();
 	std::string toString();
 	std::map<std::string, int> getAbilities(){ return abilities; };
 	int getPopularity(){ return popularity; };
 	void setPopularity(int pop){ popularity = pop; };
+	bool getSelected(){ return selected; };
 
 };
