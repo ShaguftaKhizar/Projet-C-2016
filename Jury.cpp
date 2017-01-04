@@ -6,7 +6,6 @@
 
 using namespace std;
 
-//Methode vote 
 Candidat Jury::vote(list<Candidat> lc)const 
 {	
 			  
@@ -38,36 +37,6 @@ Candidat Jury::vote(list<Candidat> lc)const
 	}
 
 
-Candidat Jury::vote(Team& t1)const {
-	
-	list<Candidat> lc = t1.getTeamMember();
-		list<Candidat>::const_iterator first , iter ;
-		Candidat c = *first;
-		int val  = 0 ;
-		
-		map<string,int>::const_iterator it,it1 ;
-		
-		it = abilitie_preference.upper_bound("Walk");
-		
-		iter = lc.begin(); 
-		for(first = lc.begin();first!= lc.end(); ++first){
-			if (c.getSelected() == true ){	
-				
-				it1 = c.getAbilities().find(it->first)  ;
-				if( it1->second   <   it->second ){
-					if (it1->second < val )
-						{
-							iter = first ; 
-							val = it1->second ; 
-						}
-				}
-		}
-	}
-		
-		Candidat c1 = *iter ; 
-		return c1 ; 
-	
-}
 
 /*Le jury a une liste de preferences sur laquelle il se base pour voter*/
 void Jury::abilityInit()

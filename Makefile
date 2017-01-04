@@ -1,36 +1,43 @@
 all: teampart
 
-CFLAGS= -Wall -g
+CFLAGS= g++ -Wall -g --std=c++11
 
-teampart : main.o Candidat.o Jury.o Mentor.o Publique.o Victim.o Jury_Team.o ProductionHouseTeam.o Task.o 
-	g++ $(CFLAGS) Candidat.o Jury.o Mentor.o Publique.o Victim.o Jury_Team.o ProductionHouseTeam.o Task.o main.o -o teampart --std=c++11
+#Victim.o Jury.o Mentor.o Jury_Team.o ProductionHouseTeam.o  
+teampart : main.o Candidat.o  Publique.o  Jury.o Mentor.o Task.o ProductionHouse.o
+	 $(CFLAGS) Candidat.o Publique.o  main.o Jury.o Mentor.o Task.o ProductionHouse.o -o teampart 
 	
 main.o :  main.cc
-	g++ $(CFLAGS) -c  main.cc --std=c++11
+	$(CFLAGS) -c  main.cc 
 	
 Candidat.o : Candidat.cpp Candidat.hh
-	g++ $(CFLAGS) -c Candidat.cpp --std=c++11
+	 $(CFLAGS) -c Candidat.cpp 
 
 Jury.o : Jury.cpp Jury.hh
-	g++ $(CFLAGS) -c Jury.cpp --std=c++11
+	$(CFLAGS) -c Jury.cpp 
 
 Mentor.o : Mentor.cpp Mentor.hh
-	g++ $(CFLAGS) -c Mentor.cpp --std=c++11
+	 $(CFLAGS) -c Mentor.cpp 
 
 Publique.o : Publique.cpp Publique.hh
-	g++ $(CFLAGS) -c Publique.cpp --std=c++11
+	$(CFLAGS) -c Publique.cpp 
 
-Victim.o : Victim.cpp Victim.hh
-	g++ $(CFLAGS) -c Victim.cpp --std=c++11
+#Victim.o : Victim.cpp Victim.hh
+#	$(CFLAGS) -c Victim.cpp 
 
-Jury_Team.o : Jury_Team.cpp Jury_Team.hh
-	g++ $(CFLAGS) -c Jury_Team.cpp --std=c++11
+#Jury_Team.o : Jury_Team.cpp Jury_Team.hh
+#	 $(CFLAGS) -c Jury_Team.cpp 
 
-ProductionHouseTeam.o : ProductionHouseTeam.cpp ProductionHouseTeam.hh
-	g++ $(CFLAGS) -c ProductionHouseTeam.cpp --std=c++11
+#ProductionHouseTeam.o : ProductionHouseTeam.cpp ProductionHouseTeam.hh
+#	$(CFLAGS) -c ProductionHouseTeam.cpp 
+
+ProductionHouse.o : ProductionHouse.cpp ProductionHouse.hh
+	$(CFLAGS) -c ProductionHouse.cpp 
 
 Task.o : Task.cpp Task.hh
-	g++ $(CFLAGS) -c Task.cpp --std=c++11
+	$(CFLAGS) -c Task.cpp 
 
 clean :
 	rm -f *.o teampart
+
+test :
+	./teampart 
