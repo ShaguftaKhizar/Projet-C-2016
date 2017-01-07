@@ -5,10 +5,10 @@
 using namespace std;
 
 
-Candidat Mentor::vote(list<Candidat> lc)const 
+Candidat Mentor::vote(vector<Candidat> lc)const 
 
 {  
-	std::list <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
+	std::vector <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
 	
 	Candidat c1 = *first ;
 	Candidat c2 = *second ; 
@@ -18,8 +18,6 @@ Candidat Mentor::vote(list<Candidat> lc)const
 					return c2 ;
 
 }
-
-
 
 std::string Mentor:: toString()const{
 	

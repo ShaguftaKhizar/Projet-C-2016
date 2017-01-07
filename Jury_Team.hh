@@ -2,9 +2,10 @@
 #include "Killer.hh"
 #include "Candidat.hh"
 #include "Victim.hh"
+//#include "number.hh"
 
 #include <string>
-#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ template <class T>
 class Jury_Team : public Killer<T>{
 
 public:
-	Jury_Team(int _capacityKill, int _memberNumber, std::list<T> _teamMember);
+	Jury_Team(int _capacityKill, int _memberNumber, std::vector<T> _teamMember);
 	void lowerSkills(Victim<Candidat>& t1);
 	Candidat candidatKill(Victim<Candidat>& v1)const;
 	std::string toString() const;
@@ -21,8 +22,10 @@ public:
 
 
 template <class T>
-Jury_Team<T>::Jury_Team(int _capacityKill, int _memberNumber, std::list<T> _teamMember) : Killer<T>(_capacityKill, _memberNumber,  _teamMember)
+Jury_Team<T>::Jury_Team(int _capacityKill, int _memberNumber, std::vector<T> _teamMember) : Killer<T>(_capacityKill, _memberNumber,  _teamMember)
 {
+	Team<T>::teamNumber = val_team();
+	//int FteamNumber = val_team();
 
 	Killer<T>::proAbilities["Wild"] = rand()%101; 
 	Killer<T>::proAbilities["Nature"] = rand()%101; 
@@ -36,7 +39,7 @@ Jury_Team<T>::Jury_Team(int _capacityKill, int _memberNumber, std::list<T> _team
 template <class T>
 void Jury_Team<T>::lowerSkills(Victim<Candidat>& t1){
 
-	list<Candidat> lc = t1.getTeamMember();
+	vector<Candidat> lc = t1.getTeamMember();
 
 	for(auto it : lc){
 
@@ -55,18 +58,16 @@ Candidat Jury_Team<T>::candidatKill(Victim<Candidat>& v1) const {
 
 	Candidat c("ZERO", 0, "ZERO");
 		
-	list<Candidat> lc = v1.getTeamMember();
-	map<string, int>::const_iterator itLow;// itUpper;
-//https://www.linuxmint.com/start/rosa/
+	vector<Candidat> lc = v1.getTeamMember();
+	map<string, int>::const_iterator itLow;
+
 	for(auto it : lc){
 
 		map<string, int> abilit = it.getAbilities();
 		itLow = abilit.lower_bound("Walk");
-		//itUpper = Killer::proAbilities.upper_bound("Wild");
-		
+			
 		if(itLow->second < (10*Killer<T>::capacityKill))
 			return it;
-
 	}
 
 	return c;
@@ -77,9 +78,10 @@ string Jury_Team<T>::toString() const{
 
 	string s;
 	
+	s += "Team number : " + to_string(Team<T>::teamNumber) + " \n";
 	s += "Capacity kill : " + to_string(Killer<T>::capacityKill) + " %\n";
 	s += "Team members : \n";
-
+	
 	for(auto it : Team<T>::teamMember)
 		s += it.toString(); 
 	

@@ -40,6 +40,19 @@ void Candidat::abilityInit()
 
 }
 
+int Candidat::moyenne(){
+
+	int somme = 0, resultat = 0;
+
+	for(auto it : abilities)
+	{
+		somme += it.second;
+	}
+	resultat = somme / abilities.size();
+
+	return resultat;
+}
+
 void Candidat::print(){
 
 	map<string, int>::iterator it;

@@ -2,6 +2,8 @@
 #include "Killer.hh"
 #include "Victim.hh"
 #include <string>
+//#include "number.hh"
+
 
 using namespace std;
 
@@ -9,7 +11,7 @@ template <class T>
 class ProductionHouseTeam : public Killer<T>{
 
 public:
-	ProductionHouseTeam(int _capacityKill, int _memberNumber, std::list<T> _teamMember);
+	ProductionHouseTeam(int _capacityKill, int _memberNumber, std::vector<T> _teamMember);
 	void lowerPopularity(Victim<Candidat>&);
 	Candidat candidatKill(Victim<Candidat>&) const;
 	std::string toString() const;
@@ -18,8 +20,9 @@ public:
 
 
 template <class T> 
-ProductionHouseTeam<T>::ProductionHouseTeam(int _capacityKill, int _memberNumber, std::list<T> _teamMember) : Killer<T>(_capacityKill, _memberNumber,  _teamMember)
+ProductionHouseTeam<T>::ProductionHouseTeam(int _capacityKill, int _memberNumber, std::vector<T> _teamMember) : Killer<T>(_capacityKill, _memberNumber,  _teamMember)
 {
+	Team<T>::teamNumber = val_team();
 
 	Killer<T>::proAbilities["Wild"] = rand()%101; 
 	Killer<T>::proAbilities["Nature"] = rand()%101; 
@@ -33,7 +36,7 @@ ProductionHouseTeam<T>::ProductionHouseTeam(int _capacityKill, int _memberNumber
 template <class T> 
 void ProductionHouseTeam<T>::lowerPopularity(Victim<Candidat>& t1){
 
-	list<Candidat> lc = t1.getTeamMember();
+	vector<Candidat> lc = t1.getTeamMember();
 
 	for(auto it : lc){
 
@@ -47,7 +50,7 @@ template <class T>
 Candidat ProductionHouseTeam<T>::candidatKill(Victim<Candidat>& v1) const{
 
 	Candidat c("ZERO", 0, "ZERO");
-	list<Candidat> lc = v1.getTeamMember();
+	vector<Candidat> lc = v1.getTeamMember();
 
 	for(auto it : lc){
 
@@ -65,9 +68,9 @@ string ProductionHouseTeam<T>::toString() const{
 	
 	s += "Capacity kill : " + to_string(Killer<T>::capacityKill) + " %\n";
 	s += "Team members : \n";
-	/*
-	for(auto it : Team::teamMemberP)
+	
+	for(auto it : Team<T>::teamMember)
 		s += it.toString(); 
-	*/
+	
 	return s;
 }

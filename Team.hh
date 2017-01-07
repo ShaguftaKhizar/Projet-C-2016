@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include <vector>
 #include <string>
 
 template<class T>
@@ -8,20 +8,19 @@ class Team
 
 protected:
 	int memberNumber;
-	std::list<T> teamMember;
+	int teamNumber;
+	std::vector<T> teamMember;
 
 public:
-	static int teamNumber;
 	virtual std::string toString() const = 0;
 	Team(){};
-	Team(int _memberNumber, std::list<T>  _teamMember) : memberNumber(_memberNumber), teamMember(_teamMember){};
-	std::list<T> getTeamMember(){ return teamMember;};
+	Team(int _memberNumber, std::vector<T>  _teamMember) : memberNumber(_memberNumber), teamMember(_teamMember){};
+	std::vector<T> getTeamMember(){ return teamMember;};
+	void setTeamNumber(int number){ teamNumber = number; };
+	int getTeamNumber(){ return teamNumber; };
 	~Team(){};
 
 };
-
-template <class T>
-int Team<T>::teamNumber = 0;
 
 
 

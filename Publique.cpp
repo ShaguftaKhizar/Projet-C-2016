@@ -6,12 +6,12 @@ using namespace std ;
 
 /*Le vote du public sert au pronostic et se situe à l'étape final 
 l'election.
-Au moment où le public vote, la liste ne doit contenir que deux finalistes*/
- Candidat Publique::vote(std::list<Candidat> lc)const 
+Au moment où le public vote, la vectore ne doit contenir que deux finavectores*/
+ Candidat Publique::vote(std::vector<Candidat> lc)const 
 {
 	
 	  
-	list <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
+	vector <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
 	Candidat c1 = *first ;
 	Candidat c2 = *second ; 
 

@@ -2,7 +2,8 @@
 #include "Team.hh"
 #include "Candidat.hh"
 #include <iostream>
-#include <list>
+#include <vector>
+//#include "number.hh"
 
 using namespace std;
 
@@ -15,29 +16,48 @@ protected:
 	bool task = false;
 
 public:
-	Victim(int _memberNumber, std::list<T> _teamMember);
+	Victim(int _memberNumber, std::vector<T> _teamMember);
 	void survivor();
 	std::string toString() const;
+	bool getTask(){ return task; };
+	void setSurvive(bool survi){ survive = survi; };
 
 };
 
 
 template <class T>
-Victim<T>::Victim(int _memberNumber, list<T> _teamMember) : Team<T>(_memberNumber, _teamMember){
+Victim<T>::Victim(int _memberNumber, vector<T> _teamMember) : Team<T>(_memberNumber, _teamMember){
 		
-		Team<T>::teamNumber++;
+	Team<T>::teamNumber = val_team();
 
-		uint number = Team<T>::memberNumber;
+	uint number = Team<T>::memberNumber;
 
-		if(Team<T>::teamMember.size() != number)
-			cerr << "Invalid team member number" << endl;
+	if(Team<T>::teamMember.size() != number)
+		cerr << "Invalid team member number" << endl;
 }
 
 template <class T>
 void Victim<T>::survivor(){
+	static bool already_saved = false;
 
-	if(survive == false)
-		task = true;
+	if(survive == false && already_saved == false ){
+
+		for(auto it : Team<T>::teamMember){
+
+			if(it.getSelected() == false){
+
+				if(it.moyenne() >= 50){
+
+					task = true;
+					already_saved = true;
+					
+				}
+				else 
+					task = false;
+			}
+		}
+		
+	}
 
 }
 
