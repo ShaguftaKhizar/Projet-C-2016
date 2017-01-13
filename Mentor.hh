@@ -1,6 +1,7 @@
 #pragma once
 #include "Electeur.hh"
 #include "Victim.hh"
+#include <iostream>
 
 
 
@@ -10,7 +11,7 @@ class Mentor : public Electeur {
 
 	 Mentor(std::string name): Electeur(2),_name(name),_enhancement_level(6){};
 	 template <class T>
-     void enhance(Victim<T> & team , std::string competence);
+     void enhance(Victim<T>& team , std::string competence);
      Candidat vote(std::vector<Candidat> lc)const ;
      template <class T>
      Candidat vote(Victim<T>& t1)const ;
@@ -18,6 +19,7 @@ class Mentor : public Electeur {
      //Accesseurs
      void set_team_number(int n ){ _team_number = n ;};
      int get_team_number(){return  _team_number ;};
+     int get_enhancement_level(){ return _enhancement_level; }; 
      std::string toString()const ;
 
 
@@ -28,15 +30,19 @@ class Mentor : public Electeur {
 };
 
 template <class T>
-void Mentor::enhance(Victim<T> & team , std::string competence)
-
+void Mentor::enhance(Victim<T>& team , std::string competence)
 {
-	 vector<Candidat> :: iterator iter;
-	 vector <Candidat> lc = team.getTeamMember();
-	 Candidat c =*iter ;
-    for (iter = lc.begin() ; iter != lc.end()  ; ++ iter)
-			c.getAbilities().find(competence)->second   += _enhancement_level;  
-    
+	vector<Candidat> :: iterator iter;
+	vector <Candidat> lc = team.getTeamMember();
+	int val = 0;
+
+	for (iter = lc.begin() ; iter != lc.end()  ; ++ iter){
+
+		val = iter->getAbilities().find(competence)->second; 
+		iter->setAbilities(val += _enhancement_level, competence);
+		cout << to_string(iter->getAbilities().find(competence)->second) << endl;
+	}
+	team.setTeamMember(lc);
 }
 
 template <class T>

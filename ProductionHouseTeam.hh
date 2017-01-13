@@ -2,7 +2,8 @@
 #include "Killer.hh"
 #include "Victim.hh"
 #include <string>
-//#include "number.hh"
+#include "number.hh"
+#include <iostream>
 
 
 using namespace std;
@@ -12,6 +13,7 @@ class ProductionHouseTeam : public Killer<T>{
 
 public:
 	ProductionHouseTeam(int _capacityKill, int _memberNumber, std::vector<T> _teamMember);
+	ProductionHouseTeam(Killer<T>& k1);
 	void lowerPopularity(Victim<Candidat>&);
 	Candidat candidatKill(Victim<Candidat>&) const;
 	std::string toString() const;
@@ -33,18 +35,33 @@ ProductionHouseTeam<T>::ProductionHouseTeam(int _capacityKill, int _memberNumber
 
 }
 
+
+template <class T>
+ProductionHouseTeam<T>::ProductionHouseTeam(Killer<T>& k1) : Killer<T>(k1.getCapacityKill(), k1.getMemberNumber(),  k1.getTeamMember())
+{
+	Team<T>::teamNumber = k1.getTeamNumber();
+	Killer<T>::proAbilities = k1.getProAbilities();
+
+}
+
+
 template <class T> 
 void ProductionHouseTeam<T>::lowerPopularity(Victim<Candidat>& t1){
 
 	vector<Candidat> lc = t1.getTeamMember();
+	vector<Candidat> :: iterator iter;
 
-	for(auto it : lc){
-
-		int pop = (it.getPopularity() - 10);
-		it.setPopularity(pop);
-
+	for(iter = lc.begin() ; iter != lc.end()  ; ++ iter){
+		//cout << "avant "<< to_string(it.getPopularity()) << endl;
+		
+		int pop = (iter->getPopularity() - 10);
+		if(iter->getPopularity() < 0)
+			iter->setPopularity(0);
+		iter->setPopularity(pop);
+		
+		cout << "Pop pendant " << to_string(pop) << endl;
 	}	
-
+	t1.setTeamMember(lc);
 }
 template <class T> 
 Candidat ProductionHouseTeam<T>::candidatKill(Victim<Candidat>& v1) const{
@@ -54,7 +71,7 @@ Candidat ProductionHouseTeam<T>::candidatKill(Victim<Candidat>& v1) const{
 
 	for(auto it : lc){
 
-		if(it.getPopularity() <= (20*Killer<T>::capacityKill))
+		if(it.getPopularity() <= Killer<T>::capacityKill)
 			return it;
 
 	}

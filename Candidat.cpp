@@ -17,17 +17,30 @@ Candidat::Candidat(string _nom, int _age, string _description){
 	abilityInit();
 }
 /*
-Candidat::Candidat(const Candidat& c){
+Candidat::Candidat(const Candidat& c)*/
+void Candidat:: operator =(Candidat c){
 
 	identity[0] = c.identity[0];
-	identity[1] = to_string(c.identity[1]);
+	identity[1] = c.identity[1];
 	identity[2] = c.identity[2];
 
 	popularity = c.popularity;
 
 	abilities = c.abilities;
+	
+	//return *this ;
 }
-*/
+
+bool Candidat:: operator ==(Candidat c){
+
+	if(identity[0] == c.identity[0] && identity[1] == c.identity[1] && identity[2] ==  c.identity[2] && 	popularity ==c.popularity /*&& abilities = c.abilities*/)
+		return true ; 
+	
+	return false ; 
+}
+
+
+
 void Candidat::abilityInit()
 {
 

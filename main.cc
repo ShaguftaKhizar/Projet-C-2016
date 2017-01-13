@@ -23,6 +23,14 @@
 
 using namespace std;
 
+/*
+    3 porblèmes à résoudre :
+    - mise à jour des map des candidats entre les méthodes enhance, lowerSkill et lowerPopularity
+    - lc.erase dans les mis à jour des vecteurs dans ProductionHouse conduit à un segfault
+    - Utilisation de upper bound incorrect pour le fonctionnement des votes et eliminationRound de ProductionHouse
+
+*/
+
 int main()
 {
     srand(time(NULL));
@@ -76,9 +84,12 @@ int main()
     pr.push_back(pro);
     ProductionHouse p(vm, vpub, vj, vc, pr);
 
-    cout << "Pro :" <<pro.getTeamNumber()<< endl;
     p.chooseTask();
-    /*
+    /*cout << "Pro :" <<pro.getTeamNumber()<< endl;
+    for(int i = 0; i < 10; i++){
+        p.chooseTask();
+    }
+      
     if(p.gameState() == 1)
         p.final();
     

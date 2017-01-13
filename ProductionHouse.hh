@@ -21,7 +21,7 @@ public:
   void chooseTask();
   int gameState();
   void final();
-    
+ 
 private:
  void update(int winNumber, std::string abilityTested1);
  void updateFight1(int winNumber, int team);

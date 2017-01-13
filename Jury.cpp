@@ -1,15 +1,15 @@
 #include "Jury.hh"
 #include "Candidat.hh"
-#include <list>
+#include <vector>
 #include <map>
 #include <ctime>
 
 using namespace std;
 
-Candidat Jury::vote(list<Candidat> lc)const 
+Candidat Jury::vote(vector<Candidat> lc)const 
 {	
 			  
-	list <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
+	vector <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
 	Candidat c1 = *first ;
 	Candidat c2 = *second ; 
 
@@ -17,28 +17,27 @@ Candidat Jury::vote(list<Candidat> lc)const
 	
 	it = abilitie_preference.upper_bound("Walk");
 
-	
-	
-				it_first = c1.getAbilities().find(it->first)  ;
-				it_second = c2.getAbilities().find(it->first)  ;
+	it_first = c1.getAbilities().find(it->first)  ;
+	it_second = c2.getAbilities().find(it->first)  ;
 				
-				if(( it_first->second   >=  it->second && it_second->second   >=  it->second)||( it_first->second   <  it->second &&it_second->second   <  it->second))					
-				{ /*on choisit au hasard le gagnant*/
-					if( (rand()% 2) == 0)
-						return c1 ;
-					else 
-						return c2;
-				}
-				else 
-					if (it_first->second   >=  it->second) 
-						return c1;
-					else
-						return c2 ;
+	if(( it_first->second   >=  it->second && it_second->second   >=  it->second)||( it_first->second   <  it->second &&it_second->second   <  it->second))					
+	{ /*on choisit au hasard le gagnant*/
+		if( (rand()% 2) == 0)
+			return c1 ;
+		else 
+			return c2;
 	}
+	else
+	{ 
+		if (it_first->second   >=  it->second) 
+			return c1;
+		else
+			return c2 ;
 
+	}
+}
 
-
-/*Le jury a une liste de preferences sur laquelle il se base pour voter*/
+/*Le jury a une vectore de preferences sur laquelle il se base pour voter*/
 void Jury::abilityInit()
 {
 		abilitie_preference["Communication skills"] = rand()%(51-35) + 35; // compétence minimale 

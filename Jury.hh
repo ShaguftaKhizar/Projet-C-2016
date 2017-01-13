@@ -26,7 +26,7 @@ class Jury : public Electeur {
     std::map<std::string, int> abilitie_preference;
 };
 
-
+/*
 template <class T>
 Candidat Jury::vote(Victim<T>& t1)const {
 	
@@ -34,7 +34,7 @@ Candidat Jury::vote(Victim<T>& t1)const {
 	vector <Candidat> ::const_iterator first ,iter; 
 	Candidat c = *first;
 	int val  = 100 ;
-		
+	
 	map<string,int>::const_iterator it,it1 ;
 		
 	it = abilitie_preference.upper_bound("Walk");
@@ -55,6 +55,37 @@ Candidat Jury::vote(Victim<T>& t1)const {
 	}
 		
 	Candidat c1 = *iter ; 
+	return c1 ; 
+	
+}
+*/
+template <class T>
+Candidat Jury::vote(Victim<T>& t1)const {
+	
+	//instruction a problème :
+	//it->first; mauvaise utilisation de upper bound
+
+	vector<Candidat> lc = t1.getTeamMember();
+	vector <Candidat> ::iterator iter; 
+	Candidat c1;
+	int val  = 100 ;
+
+	map<string,int>::const_iterator it;
+	map<string,int>::iterator it1 ;
+	it = abilitie_preference.upper_bound("Walk");
+
+	for(iter = lc.begin(); iter != lc.end(); ++iter){
+		if (iter->getSelected() == true ){
+			it1 = iter->getAbilities().find(it->first);
+			cout << "passe " << endl;
+			if( (it1->second   <   it->second) && (it1->second < val )){
+				cout << "if " << endl;
+				val = it1->second ; 
+				return *iter; 
+			}
+		}
+	}
+		
 	return c1 ; 
 	
 }

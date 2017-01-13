@@ -21,6 +21,13 @@ public:
 	void print();
 	std::string toString();
 	std::map<std::string, int> getAbilities(){ return abilities; };
+	void setAbilities(int val, std::string competence){ 
+		abilities[competence] = val; 
+	};
+	void setAbilities(std::map<std::string, int> m){
+
+		abilities = m ; 
+	}
 	int getPopularity(){ return popularity; };
 	bool getWinner(){ return winner; };
 	void setWinner(bool win){ winner = win; };
@@ -28,5 +35,7 @@ public:
 	bool getSelected(){ return selected; };
 	void setSelected(bool select){ selected = select; };
 	std::string getName(){ return identity[0]; };
+	void operator =(Candidat c);
+	bool operator ==(Candidat c);
 
 };
