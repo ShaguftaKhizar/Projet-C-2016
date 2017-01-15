@@ -7,20 +7,19 @@
 using namespace std;
 
 Candidat Jury::vote(vector<Candidat> lc)const 
-{	
+{				  
 			  
 	vector <Candidat> ::const_iterator first = lc.begin() , second = lc.end(); 
 	Candidat c1 = *first ;
 	Candidat c2 = *second ; 
 
 	map<string,int>::const_iterator it,it_first,it_second ;
-	
-	it = abilitie_preference.upper_bound("Walk");
+	int max = upperBound(abilitie_preference);
 
 	it_first = c1.getAbilities().find(it->first)  ;
 	it_second = c2.getAbilities().find(it->first)  ;
 				
-	if(( it_first->second   >=  it->second && it_second->second   >=  it->second)||( it_first->second   <  it->second &&it_second->second   <  it->second))					
+	if(( it_first->second   >=  max && it_second->second   >=  max)||( it_first->second   <  max &&it_second->second   <  max))					
 	{ /*on choisit au hasard le gagnant*/
 		if( (rand()% 2) == 0)
 			return c1 ;
@@ -29,12 +28,13 @@ Candidat Jury::vote(vector<Candidat> lc)const
 	}
 	else
 	{ 
-		if (it_first->second   >=  it->second) 
+		if (it_first->second   >=  max) 
 			return c1;
 		else
 			return c2 ;
 
 	}
+
 }
 
 /*Le jury a une vectore de preferences sur laquelle il se base pour voter*/
@@ -49,7 +49,7 @@ void Jury::abilityInit()
 }
 
 
-std::string Jury:: toString()const{
+string Jury::toString()const{
 	map<string, int>:: const_iterator it;
 	string s;
 
@@ -57,8 +57,11 @@ std::string Jury:: toString()const{
 	s += "Preferences: \n";
 	for(auto it : abilitie_preference)
 	{
-		s += it.first + " : " + to_string(it.second) + " \n";	
+		s += it.first + " : "; 
+		s += to_string(it.second) + " % | ";	
 	}
+	s += "\n\n";
+
 	return s;
 	
 }

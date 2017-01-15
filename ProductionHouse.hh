@@ -26,10 +26,12 @@ private:
  void update(int winNumber, std::string abilityTested1);
  void updateFight1(int winNumber, int team);
  void updateFight2(int winNumber, int team);
- void updateList(int team);
+ void updateList(int team , Candidat& c1);
+ void swapCandList (int position);
+ void swapCandTeam (int position , int team);
  void candidatDivision(std::vector<Candidat> lc);
  void mentorAttribution();
- void updateCandidat();
+ void updateCandidat(Candidat& c1 );
  int loser(int winNumber);
  void voteCandidat(Candidat c);
  void voteCandidat(Candidat c, int decision_power);
@@ -55,6 +57,7 @@ private:
     Task _task;
   //Survey and vote    
    std::map<string,int> _result;
+ 
 
  };
 

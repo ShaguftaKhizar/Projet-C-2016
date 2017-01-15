@@ -40,7 +40,6 @@ void Mentor::enhance(Victim<T>& team , std::string competence)
 
 		val = iter->getAbilities().find(competence)->second; 
 		iter->setAbilities(val += _enhancement_level, competence);
-		cout << to_string(iter->getAbilities().find(competence)->second) << endl;
 	}
 	team.setTeamMember(lc);
 }
@@ -49,27 +48,23 @@ template <class T>
 Candidat Mentor::vote(Victim<T>& t1)const { //vote sur la moyenne des notes
 	
 	vector<Candidat> lc = t1.getTeamMember();
-	vector<Candidat>::const_iterator first , iter ;
-	Candidat c = *first;
+	vector<Candidat>::iterator iter, first ;
+	Candidat c;
 	int moyenne, val = 100 ;
 		
-	map<string,int>::const_iterator it1 ;
-	map<string,int>  m  ;
-		
-	iter = lc.begin(); 
-	for(first = lc.begin();first!= lc.end(); ++first){
-		if (c.getSelected() == true ){	
-			moyenne = c.moyenne();
+	for(iter = lc.begin();iter!= lc.end(); ++iter){
+		if (iter->getSelected() == true ){	
+			moyenne = iter->moyenne();
 			if (moyenne < val )
 			{
-				iter = first ; 
+				first = iter; 
 				val = moyenne; 
 			}
 		}
 	}
 		
-	Candidat c1 = *iter ; 
-	return c1 ; 
+	c = *first ; 
+	return c ; 
 	
 }
 

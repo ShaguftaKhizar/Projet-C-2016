@@ -3,7 +3,7 @@
 #include "Candidat.hh"
 #include <iostream>
 #include <vector>
-//#include "number.hh"
+#include "number.hh"
 
 using namespace std;
 
@@ -21,6 +21,9 @@ public:
 	std::string toString() const;
 	bool getTask(){ return task; };
 	void setSurvive(bool survi){ survive = survi; };
+	void operator() (vector<Candidat> v ){
+		this->teamMember = v; 
+	}
 
 };
 

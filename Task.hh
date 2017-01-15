@@ -41,37 +41,23 @@ int Task::surprise_challenge(Killer<T>& k1, Victim<U>& v1, string abilityTested1
 	{
 
 		Jury_Team<T> j = static_cast<Jury_Team<T>>(k);
-		/*
-		cout << "can " <<vc[cand].getAbilities().find(abilityTested1)->second << endl;
-		cout << "jury "<<j.getProAbilities().find(abilityTested2)->second << endl;
-		*/
-		if(vc[cand].getAbilities().find(abilityTested1)->second > j.getProAbilities().find(abilityTested2)->second)
-		{
-			return v1.getTeamNumber();
-		}
-		else if(vc[cand].getAbilities().find(abilityTested1)->second < j.getProAbilities().find(abilityTested2)->second)
-		{
-			return j.getTeamNumber();
-		}
 
+		if(vc[cand].getAbilities().find(abilityTested1)->second > j.getProAbilities().find(abilityTested2)->second)
+			return v1.getTeamNumber();
+
+		else if(vc[cand].getAbilities().find(abilityTested1)->second < j.getProAbilities().find(abilityTested2)->second)
+			return j.getTeamNumber();
 	}
-	if(typeid(k1) == typeid(ProductionHouseTeam<T>)){
+	if(typeid(k1) == typeid(ProductionHouseTeam<T>))
+	{
 
 		ProductionHouseTeam<T> p = static_cast<ProductionHouseTeam<T>>(k);
-
-		cout << "can capa " << vc[cand].getAbilities().find(abilityTested1)->second << endl;
-		cout << "pro capa " << p.getProAbilities().find(abilityTested2)->second << endl;
 	
 		if(vc[cand].getAbilities().find(abilityTested1)->second >= p.getProAbilities().find(abilityTested2)->second)
-		{	
-			cout << "victim team num " << to_string(v1.getTeamNumber()) << endl;
 			return v1.getTeamNumber();
-		}
+
 		else if(vc[cand].getAbilities().find(abilityTested1)->second < p.getProAbilities().find(abilityTested2)->second)
-		{
-			cout << "pro team num "<<to_string(p.getTeamNumber()) << endl;
 			return p.getTeamNumber();
-		}
 	}
 			
 	return 0;
@@ -89,14 +75,10 @@ int Task::fashion_show_challenge(Victim<T>& v1, Victim<T>& v2, string abilityTes
 	int cand_2 = rand()% lc2.size(); 
 	
 	if(lc1[cand_1].getAbilities().find(abilityTested)->second > lc2[cand_2].getAbilities().find(abilityTested)->second)
-		{
-			return v1.getTeamNumber();
-		}
+		return v1.getTeamNumber();
 		
 	else if(lc1[cand_1].getAbilities().find(abilityTested)->second < lc2[cand_2].getAbilities().find(abilityTested)->second)
-			{
-				return v2.getTeamNumber();
-			}
+		return v2.getTeamNumber();
 	
 	return 0;
 

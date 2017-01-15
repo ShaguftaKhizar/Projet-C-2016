@@ -13,11 +13,12 @@ Candidat::Candidat(string _nom, int _age, string _description){
 	identity[1] = to_string(_age);
 	identity[2] = _description;
 
+	selected = false;
+	winner = false;
 	popularity = rand()%101; 
 	abilityInit();
 }
-/*
-Candidat::Candidat(const Candidat& c)*/
+
 void Candidat:: operator =(Candidat c){
 
 	identity[0] = c.identity[0];
@@ -88,14 +89,18 @@ string Candidat::toString(){
 	map<string, int>::iterator it;
 	string s;
 
-	s += "Nom : " + identity[0] + " Age : " + identity[1] + " ans\n ";
+	s += "Nom : " + identity[0] + " Age : " + identity[1] + " ans\n";
 	s += "Description : " + identity[2] + "\n";
 	s += "Popularity : " + to_string(popularity) + " %\n";
+	if (getSelected() == true ) s += "Selected = oui \n";
+	else 	s += "Selected = non ";
 
 	for(auto it : abilities)
 	{
-		s += it.first + " : " + to_string(it.second) + " %\n";	
+		s += it.first + " : "; 
+		s += to_string(it.second) + " % | ";	
 	}
+	s += "\n\n";
 
 	return s;
 }

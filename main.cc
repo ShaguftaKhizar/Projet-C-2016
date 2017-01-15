@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <utility>
 #include <map>
 
 #include "Team.hh"
@@ -23,18 +24,11 @@
 
 using namespace std;
 
-/*
-    3 porblèmes à résoudre :
-    - mise à jour des map des candidats entre les méthodes enhance, lowerSkill et lowerPopularity
-    - lc.erase dans les mis à jour des vecteurs dans ProductionHouse conduit à un segfault
-    - Utilisation de upper bound incorrect pour le fonctionnement des votes et eliminationRound de ProductionHouse
-
-*/
-
 int main()
 {
     srand(time(NULL));
 
+    /* Nos candidats : */
     vector<Candidat> vc;
 
     vc.push_back(Candidat("Vanessa Paradis", 45, "je suis une chanteuse de renomme mondiale"));
@@ -51,7 +45,8 @@ int main()
     vc.push_back(Candidat("Maria Carrey", 39, "je suis une chanteuse qui s'egare"));
     vc.push_back(Candidat("Pamela anderson", 48, "je suis une actrice age mais pulpeuse"));
 
-    vector<Jury> vj;
+    /* Nos Jurys : */
+   vector<Jury> vj;
 
     vj.push_back(Jury("Jean Paul Gautier"));
     vj.push_back(Jury("Yves Saint Laurent"));
@@ -60,16 +55,19 @@ int main()
     vj.push_back(Jury("Tal"));
     vj.push_back(Jury("Nelson Mandela"));
 
+    /* Nos Mentors : */
     vector<Mentor> vm;
 
     vm.push_back(Mentor("Tran Mai"));
     vm.push_back(Mentor("Aminata Dialo"));
 
+    /* Notre publiques : */
     vector<Publique> vpub;
     vpub.push_back(Publique(80));
     vpub.push_back(Publique(50));
     vpub.push_back(Publique(10));
 
+    /* Nos professionnels : */
     vector<ProMember> vp;
 
     vp.push_back(ProMember("Riberry", "Footballeur"));
@@ -79,26 +77,28 @@ int main()
     vp.push_back(ProMember("Hanouna", "Presentateur"));
     vp.push_back(ProMember("Poutine", "President"));
 
+    /* Notre maison de production : */
     ProductionHouseTeam<ProMember> pro(30, vp.size(), vp);
     vector<ProductionHouseTeam<ProMember>> pr;
     pr.push_back(pro);
     ProductionHouse p(vm, vpub, vj, vc, pr);
 
-    p.chooseTask();
-    /*cout << "Pro :" <<pro.getTeamNumber()<< endl;
-    for(int i = 0; i < 10; i++){
+    string s ;
+
+    s += "****************************************************\n";
+    s += "**** BIENVENUE AU CONCOURS DE MISS EISE 2017 *******\n";
+    s += "****************************************************\n";
+
+    cout << s << endl;
+
+    cout << "**** PLACE AU JEU ! ******\n" << endl;
+
+    while(p.gameState() == 0)
+    {
         p.chooseTask();
     }
-      
-    if(p.gameState() == 1)
-        p.final();
-    
-    cout << p.toString() << endl;
 
-    Jury_Team<Jury> j(8, 2, vj);
-    cout << j.toString() << endl;
+    cout << "**** ET LE MOMENT TANT ATTENDU : LA FINALE ! ******\n" << endl;
+    p.final();
 
-    Victim<Candidat> v1(13, vc);
-    cout << v1.toString() << endl;
-    */
 }

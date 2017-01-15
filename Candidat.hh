@@ -7,8 +7,8 @@ class Candidat{
 
 private:
 	int popularity;
-	bool selected = false;
-	bool winner = false;
+	bool selected ;
+	bool winner;
 	std::string identity[3];
 	std::map<std::string, int> abilities;
 	void abilityInit();

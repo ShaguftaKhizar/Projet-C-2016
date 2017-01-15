@@ -52,14 +52,12 @@ void ProductionHouseTeam<T>::lowerPopularity(Victim<Candidat>& t1){
 	vector<Candidat> :: iterator iter;
 
 	for(iter = lc.begin() ; iter != lc.end()  ; ++ iter){
-		//cout << "avant "<< to_string(it.getPopularity()) << endl;
 		
 		int pop = (iter->getPopularity() - 10);
 		if(iter->getPopularity() < 0)
 			iter->setPopularity(0);
 		iter->setPopularity(pop);
 		
-		cout << "Pop pendant " << to_string(pop) << endl;
 	}	
 	t1.setTeamMember(lc);
 }

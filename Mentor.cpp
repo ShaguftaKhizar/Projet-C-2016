@@ -23,8 +23,8 @@ std::string Mentor:: toString()const{
 	
 	string s;
 	s += "Nom : " + _name + "\n" ;
-	s += "Numero_equipe :" + to_string(_team_number) + "\n";
-	s += "Augmente de " + to_string(_enhancement_level) + "\n" ;
+	s += "Numero_equipe : " + to_string(_team_number) + "\n";
+	s += "Augmente de " + to_string(_enhancement_level) + " les competences de son equipe\n" ;
 	
 	return s;
 }

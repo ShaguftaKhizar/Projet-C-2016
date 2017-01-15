@@ -7,7 +7,7 @@
 using namespace std ;
 
 
- ProductionHouse :: ProductionHouse(vector<Mentor> men, vector<Publique> pub, vector<Jury> jur, vector<Candidat> can, vector<ProductionHouseTeam<ProMember>> pro) : _men(men), _pub(pub),_jur(jur),_can(can), _productionTeam(pro)
+ ProductionHouse::ProductionHouse(vector<Mentor> men, vector<Publique> pub, vector<Jury> jur, vector<Candidat> can, vector<ProductionHouseTeam<ProMember>> pro) : _men(men), _pub(pub),_jur(jur),_can(can), _productionTeam(pro)
 {
 
 	Candidat c;
@@ -21,8 +21,6 @@ using namespace std ;
 	
 	Jury_Team<Jury> J(8,_jur.size(),_jur);
 	_juryTeam.push_back(J);
-
-	//cout << J.toString() <<endl;
 
 	s1[0] = "Communication skills"; 
 	s1[1] = "Intelligence";
@@ -72,30 +70,7 @@ void ProductionHouse::candidatDivision(std::vector<Candidat> lc)
 		
 	_victimTeam.push_back(V1);
 	_victimTeam.push_back(V2);
-
-	/*
-	for(auto it: _victimTeam)
-		cout<<it.toString()<<endl;
-	*/
 	
-}
-
-void ProductionHouse::final(){
-
-	string s = survey();
-	countVoteFinal();
-	
-	map<string, int>::iterator it;
-	it = _result.upper_bound(_can[_can.size()-1].getName());
-
-	if(it->first == s)
-	{
-		if(_can[0].getName() == s)
-			_can[1].setWinner(true);
-		else
-			_can[0].setWinner(true);
-
-	}
 }
 
 void ProductionHouse::chooseTask(){
@@ -104,95 +79,141 @@ void ProductionHouse::chooseTask(){
 	string abilityTested2 = stringSelection(s2);
 	int winNumber; 
 	int i  = rand()%4;
-	//int i  = 0;
 
-	/* Le jeu sera moins long et plus logique si on fait toujours un fight entre victime
-	et un combat de killer juste après.
-	*/
-	cout<<"Victim fight"<<endl;
+	cout<<"*********** EPREUVE D'EQUIPE : ***********"<<endl;
+	cout<<"EQUIPE 1 : " << _victimTeam[1].toString() << endl;
+	cout<<"EQUIPE 2 : " << _victimTeam[0].toString() << endl;
 	winNumber = _task.fashion_show_challenge(_victimTeam[0], _victimTeam[1], abilityTested1);
-	cout<<"victim 1 "<< to_string(_victimTeam[1].getTeamNumber()) << endl;
-	cout<<"victim 0 "<< to_string(_victimTeam[0].getTeamNumber()) << endl;
-	cout << "winNumber : " << winNumber << endl;
-	if(winNumber != 0)
+
+	if(winNumber != 0){
+		cout << "L'EQUIPE GAGNANTE EST : L'EQUIPE " << winNumber << endl;
 		update(winNumber, abilityTested1);
-	//if(!gameState()){
-		//cout << "loser " << to_string(loser(winNumber)) << endl;
-		//countVote(loser(winNumber));
-		//eliminationRound(loser(winNumber));
-		//reset();
-	//}
-	/*else
-		countVoteFinal();*/
-		vector<Candidat> lc;
-			vector<Candidat> :: iterator iter ;
+	}
+	else
+		cout << "L'EQUIPE GAGNANTE EST : EGALITE " << endl;
+	if(!gameState()){
+		switch(loser(winNumber)){
+			case 0:
+			cout << "L'EQUIPE PASSANT AUX ELIMINATIONS EST : L'EQUIPE " << to_string(_victimTeam[0].getTeamNumber()) << endl;
+			break;
+			case 1:
+			cout << "L'EQUIPE PASSANT AUX ELIMINATIONS EST : L'EQUIPE " << to_string(_victimTeam[1].getTeamNumber()) << endl;
+			break;
+		}
+		countVote(loser(winNumber));
+		eliminationRound(loser(winNumber));
+		reset();
+	}
+	else
+		countVoteFinal();
 	
 	switch(i){
 
-		// Candidat a 0 ou pro a -1 = bug pour trouver le gagnant
 		case 0:
-			cout<<"Victim 1 /Jury fight"<<endl;
+			cout<<"*********** EPREUVE DE SURVIE : ***********"<<endl;
+			cout<<"L'EQUIPE " << to_string(_victimTeam[1].getTeamNumber()) << " DOIT AFFRONTER ";
+			cout<<"L'EQUIPE DE JURY "<< to_string(_juryTeam[0].getTeamNumber()) << endl;
+			cout << _juryTeam[0].toString() << endl;
+
 			winNumber = _task.surprise_challenge(_juryTeam[0], _victimTeam[1], abilityTested1, abilityTested2);
-			cout<<"jury "<< to_string(_juryTeam[0].getTeamNumber()) << endl;
-			cout<<"victim "<< to_string(_victimTeam[1].getTeamNumber()) << endl;
-			cout << "winNumber : " << winNumber << endl;
 			
-			cout << "Avant"  << endl;			
-			cout<<"victim "<< to_string(_victimTeam[1].getMemberNumber()) << endl;
-			//for(iter = lc.begin() ; iter!=lc.end(); iter++)
-				//cout<< iter->toString() << endl;
-				
-			if(winNumber != 0)
-				updateFight1(winNumber, 1);
-			cout << "Après"  << endl;	
-			cout<<"victim "<< to_string(_victimTeam[1].getMemberNumber()) << endl;	
-			lc =_victimTeam[1].getTeamMember() ; 
-			for(iter = lc.begin() ; iter!=lc.end(); iter++)
-			  cout<< iter->toString() << endl;
+			if(winNumber != 0){
+				cout << "L'EQUIPE GAGNANTE EST : L'EQUIPE " << winNumber << endl;
+				updateFight1(winNumber,1);
+			}
+			else
+				cout << "L'EQUIPE GAGNANTE EST : EGALITE " << endl;
 		break;
 		case 1:
-			cout<<"Victim 0 /Jury fight"<<endl;
+			cout<<"*********** EPREUVE DE SURVIE : ***********"<<endl;
+			cout<<"L'EQUIPE " << to_string(_victimTeam[0].getTeamNumber()) << " DOIT AFFRONTER ";
+			cout<<"L'EQUIPE DE JURY "<< to_string(_juryTeam[0].getTeamNumber()) << endl;
+			cout << _juryTeam[0].toString() << endl;
+
 			winNumber = _task.surprise_challenge(_juryTeam[0], _victimTeam[0], abilityTested1, abilityTested2);
-			cout << "winNumber : " << winNumber << endl;
-			cout<<"jury team "<< to_string(_juryTeam[0].getTeamNumber()) << endl;
-			cout<<"victim team "<< to_string(_victimTeam[0].getTeamNumber()) << endl;
-			if(winNumber != 0)
-				updateFight1(winNumber, 0);
+			
+			if(winNumber != 0){
+				cout << "L'EQUIPE GAGNANTE EST : L'EQUIPE " << winNumber << endl;
+				updateFight1(winNumber,0);
+			}
+			else
+				cout << "L'EQUIPE GAGNANTE EST : EGALITE " << endl;
 		break;
 		case 2:
-			cout<<"Victim 0 /Pro fight"<<endl;
+			cout<<"*********** EPREUVE DE SURVIE : ***********"<<endl;
+			cout<<"L'EQUIPE " << to_string(_victimTeam[0].getTeamNumber()) << " DOIT AFFRONTER ";
+			cout<<"L'EQUIPE DE PROFESSIONNELS "<< to_string(_productionTeam[0].getTeamNumber()) << endl;
+			cout << _productionTeam[0].toString() << endl;
+
 			winNumber = _task.surprise_challenge(_productionTeam[0], _victimTeam[0], abilityTested1, abilityTested2);
-			cout<<"pro "<< to_string(_productionTeam[0].getTeamNumber()) << endl;
-			cout<<"victim "<< to_string(_victimTeam[0].getTeamNumber()) << endl;
-			cout << "winNumber : " << winNumber << endl;
-			if(winNumber != 0)
+
+			if(winNumber != 0){
+				cout << "L'EQUIPE GAGNANTE EST : L'EQUIPE " << winNumber << endl;
 				updateFight2(winNumber, 0);
+			}
+			else
+				cout << "L'EQUIPE GAGNANTE EST : EGALITE " << endl;
 		break;
 		case 3:
-			cout<<"Victim 1 /Pro fight"<<endl;
+			cout<<"*********** EPREUVE DE SURVIE : ***********"<<endl;
+			cout<<"L'EQUIPE " << to_string(_victimTeam[1].getTeamNumber()) << " DOIT AFFRONTER ";
+			cout<<"L'EQUIPE DE PROFESSIONNELS "<< to_string(_productionTeam[0].getTeamNumber()) << endl;
+			cout << _productionTeam[0].toString() << endl;
+
 			winNumber = _task.surprise_challenge(_productionTeam[0], _victimTeam[1], abilityTested1, abilityTested2);
-			cout << "winNumber : " << winNumber << endl;
-			if(winNumber != 0)
+
+			if(winNumber != 0){
+				cout << "L'EQUIPE GAGNANTE EST : L'EQUIPE " << winNumber << endl;
 				updateFight2(winNumber, 1);
+			}
+			else
+				cout << "L'EQUIPE GAGNANTE EST : EGALITE " << endl;
 		break;
 	
 	};
 
 }
 
+void ProductionHouse::final(){
+
+	string s = survey();
+	countVoteFinal();
+	
+	string smax;
+	smax = upperBounds(_result);
+
+	if(smax == s)
+	{
+		if(_can[0].getName() == s){
+			
+			_can[1].setWinner(true);
+			cout << "************* ET LE GAGNANT EST : *****************\n" << endl;
+			cout << _can[1].toString() << endl;
+		}
+		else{
+			
+			_can[0].setWinner(true);
+			cout << "************* ET LE GAGNANT EST : *****************\n" << endl;
+			cout << _can[0].toString() << endl;
+
+		}
+	}
+}
+
 void ProductionHouse::eliminationRound(int team){
 
-	map<string, int>::iterator it;
-	it = _result.upper_bound(_can[_can.size()-1].getName());
+	string s = upperBounds(_result);
+	vector<Candidat>::iterator iter;
 
-	for(auto iter : _can){
+	for(iter = _can.begin(); iter != _can.end(); iter++){
 
-		if(iter.getName() == it->first){
-			iter.setSelected(false);
+		if(iter->getName() == s){
+			iter->setSelected(false);
+			updateList(team, *iter);
+			break;
 		}
 	}
 
-	//updateList(team);
 }
 
 string ProductionHouse::survey(){
@@ -203,11 +224,9 @@ string ProductionHouse::survey(){
 		c = it.vote(_can);
 		voteCandidat(c, it.getDecision_power());
 	}	
+	string s = upperBounds(_result);
 
-	map<string, int>::iterator it;
-	it = _result.upper_bound(_can[_can.size()-1].getName());
-
-	return it->first;
+	return s;
 }
 
 void ProductionHouse::reset(){
@@ -232,6 +251,10 @@ void ProductionHouse::countVoteFinal(){
 		voteCandidat(c, it.getDecision_power());
 	}	
 
+	cout << "RESULTAT DES VOTES POUR LE VAINQUEUR " << endl;
+	for(auto it : _result){
+		cout << it.first << " : " << to_string(it.second) << endl; 
+	}
 }
 
 void ProductionHouse::countVote(int team){
@@ -247,28 +270,34 @@ void ProductionHouse::countVote(int team){
 		voteCandidat(c);	
 	}	
 
+	cout << "RESULTAT DES VOTES POUR L'ELIMINATION " << endl;
+	for(auto it : _result){
+		cout << it.first << " : " << to_string(it.second) << endl; 
+	}
 }
 
 void ProductionHouse::voteCandidat(Candidat c){
 
-	for(auto it : _result){
+	map<string, int>::iterator it;
+	for(it = _result.begin(); it!= _result.end(); it++){
 
-		if(it.first == c.getName())
-			it.second++;
+		if(it->first == c.getName()){
+			it->second++;
+		}
 	}
 
 }
 
 void ProductionHouse::voteCandidat(Candidat c, int decision_power){
 
-	for(auto it : _result)
+	map<string, int>::iterator it;
+	for(it = _result.begin(); it!= _result.end(); it++)
 	{
-		if(it.first == c.getName())
+		if(it->first == c.getName())
 		{
-				it.second += decision_power;
+			it->second += decision_power;
 		}
 	}
-
 }
 
 int ProductionHouse::loser(int winNumber)
@@ -281,7 +310,6 @@ int ProductionHouse::gameState(){
 
 	if(_can.size() == 2)
 		return 1;
-	
 	return 0;
 }
 
@@ -316,11 +344,14 @@ void ProductionHouse::update(int winNumber, string abilityTested1){
 	{
 		if(_men[0].get_team_number() == winNumber)
 		{
+			cout << "LE MENTOR DE L'EQUIPE " << to_string(winNumber) << endl;
+			cout << _men[0].toString() << endl;
 			_men[0].enhance( _victimTeam[0], abilityTested1);
-
 		}
 		else
 		{
+			cout << "LE MENTOR DE L'EQUIPE " << to_string(winNumber) << endl;
+			cout << _men[1].toString() << endl;
 			_men[1].enhance( _victimTeam[0], abilityTested1);
 		}
 	}
@@ -328,60 +359,138 @@ void ProductionHouse::update(int winNumber, string abilityTested1){
 	{
 		if(_men[0].get_team_number() == winNumber)
 		{
+			cout << "LE MENTOR DE L'EQUIPE " << to_string(winNumber) << endl;
+			cout << _men[0].toString() << endl;
 			_men[0].enhance( _victimTeam[1], abilityTested1);
 		}
 		else
 		{ 
+			cout << "LE MENTOR DE L'EQUIPE " << to_string(winNumber) << endl;
+			cout << _men[1].toString() << endl;
 			_men[1].enhance( _victimTeam[1], abilityTested1);
 		}
 
 	}
 }
 
+void ProductionHouse::swapCandTeam (int position , int team){
 
-void ProductionHouse::updateFight1(int winNumber, int team){
+		vector<Candidat> v1 = _victimTeam[team].getTeamMember() ; 
+		vector<Candidat> :: iterator it ; 
+		
+		Candidat c ;
+		c = v1[position] ;
+		v1[position] = v1[v1.size() - 1] ;
+		v1[v1.size() - 1] = c ;
+		  
+		v1.pop_back();
+		  
+		_victimTeam[team].setTeamMember(v1);
+
+		  /* Autiliser si on veut faire un affichage
+		  for(it = v1.begin() ; it!=v1.end(); it++)
+			  cout<< it->toString() << endl;*/
+		 //Cette instruction fait un abort
+		 //cout<<_victimTeam[team].toString()<<endl; 
+	
+}
+
+void ProductionHouse::updateList(int team , Candidat& c1){
+	
+	vector<Candidat> :: iterator it ; 
+	vector<Candidat> v1 = _victimTeam[team].getTeamMember() ; 
+	int i = 0 , index = 0  ;
+		
+	// On récupère la position du candidat dans la liste
+	for ( it = v1.begin() ; it != v1.end() ; it++){	
+		if( *it == c1 ) 
+			index = i;  	
+		i++;
+	}
+	
+	cout << endl << "LE CANDIDAT ELIMINE EST : " << endl;
+	cout << c1.toString() << endl << endl; 
+
+	swapCandTeam (index,team);
+	updateCandidat(c1);
+	
+}
+
+void ProductionHouse::swapCandList (int position){
 	
 	Candidat c ;
-	vector<Candidat> ::iterator it ;
-	vector<Candidat> v ; 
+ 	c = _can[position] ; 
+	_can[position] = _can[_can.size() - 1]; 
+	_can[_can.size() - 1] = c ;
+	_can.pop_back();
+		  	
+}
 
+
+void ProductionHouse::updateCandidat(Candidat& c1){
 	
+	vector<Candidat>::iterator it ; 	
+	int i = 0 , index = 0  ;
+		
+	// On récupère la position du candidat dans la liste
+	for ( it = _can.begin() ; it != _can.end() ; it++){	
+		if( *it == c1 ) 
+			index = i;  	
+		i++;
+	}
+	
+	swapCandList(index);
+}
+
+
+void ProductionHouse::updateFight1(int winNumber ,int team){
+	
+	Candidat c ;
+	vector<Candidat>::iterator it ;
+	vector<Candidat> v ;
+	c.setSelected(true); 
+		
 	if(_juryTeam[0].getTeamNumber() == winNumber)
 	{
-		_juryTeam[0].lowerSkills(_victimTeam[team]);
-
+		_juryTeam[0].lowerSkills( _victimTeam[team]);
+		cout << "LES CANDIDATS VIENNENT DE PERDRE EN COMPETENCE " << endl;
 		c = _juryTeam[0].candidatKill(_victimTeam[team]);
+
+		if(c.getName() == "ZERO")
+			exit(0);
+		
+		cout << "CANDIDAT KILL SUITE A LA DEFAITE" << endl;	
+		cout<< c.toString() << endl;
 					
-			v = _victimTeam[team].getTeamMember();
-		for (it = v.begin() ; it !=v.end(); ++it )
-		{	
-			if( *it == c)
-				it->setSelected(false); 
-		}
-		_victimTeam[team].setTeamMember(v);
+		updateList(team ,c);
+
 		_victimTeam[team].survivor();
 
 		if(_victimTeam[team].getTask() == true)
 			winNumber = _task.surprise_challenge(_juryTeam[0], _victimTeam[team], stringSelection(s1), stringSelection(s2));
 
-			if(_victimTeam[team].getTeamNumber() == winNumber)
+			if(_victimTeam[team].getTeamNumber() == winNumber) /*test si le numero du gagnant à changé*/
 			{
+				cout << "L'EQUIPE A SAUVER SON MEMBRE EN REMPORTANT UNE AUTRE EPREUVE" << endl;
 				v = _victimTeam[team].getTeamMember();
 				for (it = v.begin() ; it !=v.end(); ++it )
 				{	
-					if( *it == c)
+					if( *it == c ){
 						it->setSelected(true); 
+						break ; 
+					}
 				}
 				_victimTeam[team].setTeamMember(v);
 			}	
 		else 
 		{
 			for (it = _can.begin() ; it!=_can.end() ; it++ )
-				{	
-					if( *it == c )
-						it->setSelected(false); 
-				}
-			updateList(team);
+			{	
+				if( *it == c ){
+					it->setSelected(false); 
+					break ; 
+			    }
+			}
 		}
 	}	
 
@@ -392,89 +501,49 @@ void ProductionHouse::updateFight1(int winNumber, int team){
 
 	
 	Candidat c ;
+	vector<Candidat>::iterator it ;
+	vector<Candidat> v;
+
 	if(_productionTeam[0].getTeamNumber() == winNumber)
-	{
-		cout << "Avant" <<endl;
-		for(auto it : _victimTeam[team].getTeamMember())
-			cout << to_string(it.getPopularity()) << endl;
+	{	
 
 		_productionTeam[0].lowerPopularity(_victimTeam[team]);
-
-		cout << "Après" <<endl;
-		for(auto it : _victimTeam[team].getTeamMember())
-			cout << to_string(it.getPopularity()) << endl;
-
+		cout << "LES CANDIDATS VIENNENT DE PERDRE EN POPULARITE " << endl;
 		c = _productionTeam[0].candidatKill(_victimTeam[team]);	
+
+		if(c.getName() == "ZERO")
+			exit(0);
+
+		cout << "CANDIDAT KILL SUITE A LA DEFAITE" << endl;	
+		cout<< c.toString() << endl;
 			
-		for (auto it : _victimTeam[team].getTeamMember())
+		updateList(team ,c);
+
+		_victimTeam[team].survivor();
+
+		if(_victimTeam[team].getTask() == true)
+			winNumber = _task.surprise_challenge(_productionTeam[0], _victimTeam[team], stringSelection(s1), stringSelection(s2));
+
+		if(_victimTeam[team].getTeamNumber() == winNumber)
+		{
+			cout << "L'EQUIPE A SAUVER SON MEMBRE EN REMPORTANT UNE AUTRE EPREUVE" << endl;
+			v = _victimTeam[team].getTeamMember();
+			for (it = v.begin(); it!= v.end(); it++)
 			{	
-				if( it == c)
-					it.setSelected(false); 
-			}
-			_victimTeam[team].survivor();
-
-			if(_victimTeam[team].getTask() == true)
-				winNumber = _task.surprise_challenge(_productionTeam[0], _victimTeam[team], stringSelection(s1), stringSelection(s2));
-
-			if(_victimTeam[team].getTeamNumber() == winNumber)
-				{
-					for (auto it : _victimTeam[team].getTeamMember())
-					{	
-						if( it == c)
-							it.setSelected(true); 
-					}
-				}	
-			else 
-			{
-				for (auto it : _can)
-					{	
-						if( it == c)
-							it.setSelected(false); 
-					}
-				updateList(team);
-			}		
+				if( *it == c )
+					it->setSelected(true); 
+			}	
+			_victimTeam[team].setTeamMember(v);
 		}
-
+		else 
+		{
+			for ( it = _can.begin(); it != _can.end(); it++)
+			{	
+				if( *it == c )
+					it->setSelected(false); 	
+			}
+		}		
+	}
+ 
  }
-
- void ProductionHouse::updateList(int team){
-
- 	vector<Candidat> vc = _victimTeam[team].getTeamMember();
- 	list<Candidat> :: iterator iter ; 
- 	list<Candidat> lc;
-cout<<"updatelist"<<endl;
- 	copy(begin(vc), end(vc), back_inserter(lc));
- 	for(iter = lc.begin() ; iter != lc.end() ; ++iter){
- 		if(iter->getSelected() == false)
- 		{
- 			iter = lc.erase(iter);	
- 		}
- 	}
- 	copy(begin(lc), end(lc), back_inserter(vc));
- 	
- 	_victimTeam[team].setTeamMember(vc) ; 
- 	int val = _victimTeam[team].getMemberNumber() - 1 ;
- 	_victimTeam[team].setMemberNumber(val ) ;
- 	cout<<"victim_ "<< to_string(_victimTeam[team].getMemberNumber()) << endl;
- 	
- 	updateCandidat();
-
- }
-
-void ProductionHouse::updateCandidat(){
-
-	list <Candidat> lc;
- 	list<Candidat> :: iterator iter ; 
-
- 	copy(begin(_can), end(_can), back_inserter(lc));
- 	for(iter = lc.begin() ; iter != lc.end() ; ++iter){
- 		if(iter->getSelected() == false)
- 		{
- 			iter = lc.erase(iter);	
- 		}
- 	}
- 	copy(begin(lc), end(lc), back_inserter(_can));
-
-}
-
 
